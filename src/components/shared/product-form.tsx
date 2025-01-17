@@ -1,15 +1,15 @@
-'use client';
-import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+'use client'
+import React from 'react';
 import {
 	Dialog,
 	DialogContent,
 	DialogDescription,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from '../ui/dialog';
+import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { v4 as uuidv4 } from 'uuid';
 import {
 	Form,
 	FormControl,
@@ -21,18 +21,25 @@ import {
 } from '../ui/form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ProductSchema, productSchema } from '@/schemas/product.schema';
-import { Input } from '../ui/input';
+import {
+	ProductItem,
+	ProductSchema,
+	productSchema,
+} from '@/schemas/product.schema';
 import { Textarea } from '../ui/textarea';
 import { useProductStore } from '@/store/use-product-store';
 
-const AddProduct = () => {
-	const [open, setOpen] = useState(false);
+type ProductFormProps = {
+	open: boolean;
+	setOpen: (val: boolean) => void;
+	initialValues?: ProductItem;
+};
 
+const ProductForm = ({ open, setOpen, initialValues }: ProductFormProps) => {
 	const { addProduct } = useProductStore();
 
 	const form = useForm<ProductSchema>({
-		defaultValues: {
+		defaultValues: initialValues ?? {
 			title: '',
 			description: '',
 			price: 0,
@@ -48,14 +55,12 @@ const AddProduct = () => {
 		setOpen(false);
 		addProduct({ id, ...data });
 	};
+
 	return (
 		<Dialog
 			open={open}
 			onOpenChange={setOpen}
 		>
-			<DialogTrigger asChild>
-				<Button variant='outline'>Add product</Button>
-			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>Add product</DialogTitle>
@@ -168,4 +173,4 @@ const AddProduct = () => {
 	);
 };
 
-export default AddProduct;
+export default ProductForm;
