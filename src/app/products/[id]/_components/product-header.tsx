@@ -8,9 +8,10 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import ProductActionsDropdown from '@/components/shared/product-actions-dropdown'
 const ProductHeader = ({ product }: { product: ProductItem }) => {
 	return (
-		<div className='grid grid-cols-[1fr,50px]'>
+		<div className='grid grid-cols-[1fr,40px] mb-10'>
 			<Breadcrumb>
 				<BreadcrumbList>
 					<BreadcrumbItem>
@@ -22,6 +23,7 @@ const ProductHeader = ({ product }: { product: ProductItem }) => {
 					</BreadcrumbItem>
 				</BreadcrumbList>
 			</Breadcrumb>
+			<ProductActionsDropdown product={product} />
 		</div>
 	);
 };
