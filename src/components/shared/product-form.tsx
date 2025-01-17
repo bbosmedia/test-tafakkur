@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import {
 	Dialog,
@@ -28,15 +28,23 @@ import {
 } from '@/schemas/product.schema';
 import { Textarea } from '../ui/textarea';
 import { useProductStore } from '@/store/use-product-store';
+import { useToast } from '@/hooks/use-toast'
 
 type ProductFormProps = {
 	open: boolean;
 	setOpen: (val: boolean) => void;
 	initialValues?: ProductItem;
+	edit?: boolean;
 };
 
-const ProductForm = ({ open, setOpen, initialValues }: ProductFormProps) => {
-	const { addProduct } = useProductStore();
+const ProductForm = ({
+	open,
+	setOpen,
+	initialValues,
+	edit = false,
+}: ProductFormProps) => {
+	const { addProduct, updateProduct } = useProductStore();
+	const {toast} = useToast()
 
 	const form = useForm<ProductSchema>({
 		defaultValues: initialValues ?? {
@@ -49,11 +57,16 @@ const ProductForm = ({ open, setOpen, initialValues }: ProductFormProps) => {
 	});
 
 	const onSubmit = (data: ProductSchema) => {
-		const id = uuidv4();
-		console.log(data);
+		if (edit) {
+			updateProduct(initialValues?.id!, data);
+			toast({title: 'Product successfully updated.'})
+		} else {
+			const id = uuidv4();
+			addProduct({ id, ...data });
+			toast({title: 'Product successfully created.'})
+		}
 		form.reset();
 		setOpen(false);
-		addProduct({ id, ...data });
 	};
 
 	return (
@@ -63,9 +76,11 @@ const ProductForm = ({ open, setOpen, initialValues }: ProductFormProps) => {
 		>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Add product</DialogTitle>
+					<DialogTitle>{edit ? 'Update product' : 'Add product'}</DialogTitle>
 					<DialogDescription>
-						Enter product details in the below and create new product.
+						{edit
+							? 'Enter new data to update product'
+							: 'Enter product details in the below and create new product.'}
 					</DialogDescription>
 				</DialogHeader>
 				<div className=''>
@@ -163,7 +178,9 @@ const ProductForm = ({ open, setOpen, initialValues }: ProductFormProps) => {
 								>
 									Cancel
 								</Button>
-								<Button type='submit'>Add product</Button>
+								<Button type='submit'>
+									{edit ? 'Save changes' : 'Create product'}
+								</Button>
 							</div>
 						</form>
 					</Form>

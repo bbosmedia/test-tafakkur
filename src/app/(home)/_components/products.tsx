@@ -1,11 +1,12 @@
 'use client';
 import { Card } from '@/components/ui/card';
 import { useProductStore } from '@/store/use-product-store';
-import React from 'react';
+import React, { useEffect } from 'react';
 import ProductCard from './product-card';
 
 const Products = () => {
 	const { products } = useProductStore();
+
 	if (products.length === 0)
 		return (
 			<Card className='w-full h-[200px] flex items-center justify-center p-4'>

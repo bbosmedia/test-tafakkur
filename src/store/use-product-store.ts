@@ -9,6 +9,10 @@ export const useProductStore = create<ProductStore>(set => ({
 			localStorage.setItem('products', JSON.stringify(updatedProducts));
 			return { products: updatedProducts };
 		}),
+	updateProducts: items =>
+		set(state => {
+			return { products: items };
+		}),
 	updateProduct: (id, updatedProduct) =>
 		set(state => {
 			const updatedProducts = state.products.map(product =>

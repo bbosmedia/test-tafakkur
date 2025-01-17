@@ -3,6 +3,9 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 
 import { ThemeProvider } from 'next-themes';
+import GetLocalStorageProducts from '@/components/layout/get-localstorage-products';
+import { Toaster } from '@/components/ui/toaster';
+import Header from '@/components/layout/header'
 
 const inter = Inter({
 	subsets: ['latin'],
@@ -31,7 +34,10 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange
 				>
+					<Header></Header>
 					{children}
+					<GetLocalStorageProducts />
+					<Toaster />
 				</ThemeProvider>
 			</body>
 		</html>
