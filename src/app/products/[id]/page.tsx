@@ -1,12 +1,13 @@
 import ProductContainer from './_components/product-container';
 
-type Props = {
-	params: {
+const SingleProduct = async ({
+	params,
+}: {
+	params: Promise<{
 		id: string;
-	};
-};
-
-const SingleProduct = ({ params: { id } }: Props) => {
+	}>;
+}) => {
+	const id = (await params).id;
 	return <ProductContainer id={id} />;
 };
 
