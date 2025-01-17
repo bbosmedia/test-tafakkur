@@ -2,7 +2,7 @@ import { ProductStore } from '@/types';
 import { create } from 'zustand';
 
 export const useProductStore = create<ProductStore>(set => ({
-	products: JSON.parse(localStorage.getItem('products') || '[]'),
+	products: [],
 	addProduct: product =>
 		set(state => {
 			const updatedProducts = [...state.products, product];

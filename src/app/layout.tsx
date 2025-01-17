@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import './globals.css';
-import Header from '@/components/layout/header';
+
 import { ThemeProvider } from 'next-themes';
 
-const Inter = Geist({
+const inter = Inter({
 	subsets: ['latin'],
 	weight: ['400', '500', '600', '700'],
 });
@@ -24,15 +24,14 @@ export default function RootLayout({
 			lang='en'
 			suppressHydrationWarning
 		>
-			<body className={`${Inter.className}`}>
+			<body className={`${inter.className}`}>
 				<ThemeProvider
 					attribute='class'
 					defaultTheme='dark'
 					enableSystem
 					disableTransitionOnChange
 				>
-					<Header></Header>
-					<main>{children}</main>
+					{children}
 				</ThemeProvider>
 			</body>
 		</html>
